@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,11 +35,32 @@ public class FirstActivity extends AppCompatActivity {
 //                startActivity(intent);
 
                 //隐式Intent  打开其他网页
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://pan.baidu.com/s/11zmKrNWUb6NrTgLSpMrWrA"));
-                startActivity(intent);
+                //Intent intent = new Intent(Intent.ACTION_VIEW);
+                //intent.setData(Uri.parse("https://pan.baidu.com/s/11zmKrNWUb6NrTgLSpMrWrA"));
+                //startActivity(intent);
+                //传递参数给先一个activity
+//                String data = "Hello SecondActivity";
+//                Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+//                intent.putExtra("extra_data",data);
+//                startActivity(intent);
+
+                Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                startActivityForResult(intent,1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+        switch(requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    String returnData =data.getStringExtra("data_return");
+                    Log.d("FirstActivity",returnData);
+                }
+                break;
+            default:
+        }
     }
 
     //显示菜单
